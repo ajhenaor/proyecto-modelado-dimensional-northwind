@@ -182,9 +182,12 @@ pip install -r requirements.txt
 ```bash
 cp .env.example .env
 # Edita .env con TU cuenta, usuario, rol, warehouse y database.
-# Para el target por defecto (dev_password) define también:
-# SNOWFLAKE_PASSWORD=<tu-contraseña>
 ```
+
+Elige **una** forma de autenticación (ver también [Opciones de autenticación](#opciones-de-autenticación)):
+
+- **Contraseña (recomendado si tienes usuario/contraseña nativos):** añade `SNOWFLAKE_PASSWORD=<tu-contraseña>` en `.env` y usa los comandos del paso 5 **sin** `--target`.
+- **OAuth en el navegador (SSO):** no hace falta `SNOWFLAKE_PASSWORD`; en el paso 5 usa `--target dev` en todos los comandos `dbt.sh`.
 
 #### 3. Crear la base de datos en Snowflake
 
@@ -204,21 +207,32 @@ python scripts/verify_seeds.py
 
 #### 5. Construir y probar el proyecto
 
+**Opción A — contraseña** (requiere `SNOWFLAKE_PASSWORD` en `.env`):
+
 ```bash
 ./scripts/dbt.sh debug
 ./scripts/dbt.sh build
 ```
 
-`dbt build` carga seeds, ejecuta snapshots, materializa modelos y corre tests en orden de dependencias.
+**Opción B — OAuth en el navegador** (si no usas contraseña o ves `251006: Password is empty`):
+
+```bash
+./scripts/dbt.sh debug --target dev
+./scripts/dbt.sh build --target dev
+```
+
+`dbt build` carga seeds, ejecuta snapshots, materializa modelos y corre tests en orden de dependencias. Con conexión correcta deberías ver algo como **54 PASS** (16 modelos, 7 seeds, 3 snapshots, 28 tests).
 
 ### Opciones de autenticación
 
-| Target | Uso | Requiere |
-|--------|-----|----------|
-| `dev_password` (por defecto) | Usuario y contraseña | `SNOWFLAKE_PASSWORD` en `.env` |
-| `dev` | OAuth en navegador | SSO configurado; `./scripts/dbt.sh build --target dev` |
+| Target | Comandos del paso 5 | Requiere |
+|--------|---------------------|----------|
+| `dev_password` (por defecto en `profiles.yml`) | `./scripts/dbt.sh debug` y `build` | `SNOWFLAKE_PASSWORD` en `.env` |
+| `dev` | `./scripts/dbt.sh debug --target dev` y `build --target dev` | Cuenta con SSO; se abre el navegador la primera vez |
 
-El script `./scripts/dbt.sh` carga `dbt_snowflake_oauth_patch.py` (útil para OAuth; inerte con contraseña).
+El script `./scripts/dbt.sh` carga `dbt_snowflake_oauth_patch.py` (útil para OAuth; no afecta el flujo con contraseña).
+
+> **Probado en clone limpio:** pasos 1–4 sin Snowflake; paso 5 con `--target dev` completa el build y deja `FACT_ORDERS` = `STG_ORDERS` = 830 en `NORTHWIND_DIMENSIONAL_DEV`.
 
 ### Modelo de datos
 
