@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  - name: stg_orders
+    columns:
+      - name: customer_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_customers')
+                field: customer_id
+      - name: employee_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_employees')
+                field: employee_id
+      - name: shipper_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_shippers')
+                field: shipper_id
+
+  - name: stg_order_details
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_orders')
+                field: order_id

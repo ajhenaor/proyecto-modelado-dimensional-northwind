@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: northwind_raw
+    database: "{{ target.database }}"
+    schema: RAW
+    tables:
+      - name: customers
+      - name: customer_demographics
+      - name: customer_customer_demo
+      - name: orders
+      - name: order_details
+      - name: employees
+      - name: shippers

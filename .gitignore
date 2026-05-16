@@ -1,0 +1,10 @@
+.venv/
+.env
+target/
+logs/
+dbt_packages/
+package-lock.yml
+.DS_Store
+.cursor/
+dbt/.user.yml
+__pycache__/

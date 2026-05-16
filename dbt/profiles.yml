@@ -1,0 +1,30 @@
+# dbt Snowflake profiles. Point dbt here via DBT_PROFILES_DIR (handled by ./scripts/dbt.sh).
+# Credentials come from .env (see .env.example). Required Snowflake grants:
+#   USAGE on warehouse, USAGE on database, CREATE SCHEMA on database, USAGE on role.
+# Two targets: dev_password (default, simplest) and dev (OAuth browser flow).
+northwind_dimensional:
+  target: dev_password
+  outputs:
+    dev_password:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
+      password: "{{ env_var('SNOWFLAKE_PASSWORD', '') }}"
+      role: "{{ env_var('SNOWFLAKE_ROLE') }}"
+      warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE') }}"
+      database: "{{ env_var('SNOWFLAKE_DATABASE') }}"
+      schema: "{{ env_var('SNOWFLAKE_SCHEMA') }}"
+      client_session_keep_alive: true
+      threads: 4
+
+    dev:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
+      role: "{{ env_var('SNOWFLAKE_ROLE') }}"
+      warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE') }}"
+      database: "{{ env_var('SNOWFLAKE_DATABASE') }}"
+      schema: "{{ env_var('SNOWFLAKE_SCHEMA') }}"
+      authenticator: OAUTH_AUTHORIZATION_CODE
+      client_session_keep_alive: true
+      threads: 4

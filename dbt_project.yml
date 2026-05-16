@@ -1,0 +1,33 @@
+name: northwind_dimensional
+version: "1.0.0"
+config-version: 2
+
+profile: northwind_dimensional
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+snapshot-paths: ["snapshots"]
+macro-paths: ["macros"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+
+models:
+  northwind_dimensional:
+    +materialized: view
+    staging:
+      +schema: staging
+    intermediate:
+      +schema: int
+      +materialized: table
+    marts:
+      +schema: marts
+      +materialized: table
+
+seeds:
+  northwind_dimensional:
+    +quote_columns: false
+    +schema: raw
+
+snapshots:
+  northwind_dimensional:
+    +target_schema: snapshots

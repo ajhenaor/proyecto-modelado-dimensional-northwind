@@ -1,0 +1,32 @@
+{
+  "outputs": {
+    "customers.csv": {
+      "rows": 91,
+      "sha256": "0c4bed17fd4f2281fff78fa882e0b32dfea2791a3093e12689b4ff3c3d973ef8"
+    },
+    "customer_demographics.csv": {
+      "rows": 0,
+      "sha256": "0b435f48e8d8ac37fbeec1dd9ddfa3f3ae427ca5529e21412c84202881b0f60a"
+    },
+    "customer_customer_demo.csv": {
+      "rows": 0,
+      "sha256": "b5f1e53e9b781fbf335d5454a74fbabc7b44928f971c56650a1c3fe4794cef21"
+    },
+    "orders.csv": {
+      "rows": 830,
+      "sha256": "596a048186fd168c6771a6bb067b229f6fa9c0fad7e1ee69c8db608811108d74"
+    },
+    "order_details.csv": {
+      "rows": 2155,
+      "sha256": "9c08ad9a3768c09316efc957fb02334f1c6caa96434884b647e4102149ab997b"
+    },
+    "employees.csv": {
+      "rows": 9,
+      "sha256": "440db27653e0ed226dfae9ebebc7380e2d8ddb81a24dc23f8371b15a6f2cb753"
+    },
+    "shippers.csv": {
+      "rows": 3,
+      "sha256": "936d9575a5567fac6fa356ea49916a8af3bf49d946fba15815968a3b1b1d5590"
+    }
+  }
+}

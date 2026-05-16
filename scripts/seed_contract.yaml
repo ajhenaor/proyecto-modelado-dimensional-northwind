@@ -1,0 +1,58 @@
+# Machine-readable seed registry (plan: Post-implementation validation §A).
+# Preprocess output must match these logical entities and keys.
+# Run: python scripts/preprocess_seeds.py → seeds/*.csv + seed_manifest.json
+
+version: 1
+
+entities:
+  customers:
+    seed_file: customers.csv
+    schema: RAW
+    primary_key: [customer_id]
+    columns:
+      - customer_id
+      - company_name
+      - contact_name
+      - contact_title
+      - address
+      - city
+      - region
+      - postal_code
+      - country
+      - phone
+      - fax
+
+  customer_demographics:
+    seed_file: customer_demographics.csv
+    primary_key: [customer_type_id]
+
+  customer_customer_demo:
+    seed_file: customer_customer_demo.csv
+    foreign_keys:
+      - columns: [customer_id]
+        references: customers.customer_id
+      - columns: [customer_type_id]
+        references: customer_demographics.customer_type_id
+
+  orders:
+    seed_file: orders.csv
+    primary_key: [order_id]
+    foreign_keys:
+      - columns: [customer_id]
+        references: customers.customer_id
+
+  order_details:
+    seed_file: order_details.csv
+    grain: [order_id, product_id]
+    foreign_keys:
+      - columns: [order_id]
+        references: orders.order_id
+
+  employees:
+    seed_file: employees.csv
+    primary_key: [employee_id]
+    dropped_source_columns: [Photo]
+
+  shippers:
+    seed_file: shippers.csv
+    primary_key: [shipper_id]
