@@ -42,6 +42,10 @@ Al finalizar este proyecto habrás aprendido a:
 
 Trabajarás con el dataset **Northwind**. Los CSV crudos están incluidos en este repositorio bajo `datasets/northwind/` (misma fuente que el enlace del curso).
 
+**Modelo relacional de referencia (origen):**
+
+![Esquema relacional Northwind](datasets/northwind/northwind-schema.svg)
+
 > **Nota:** Algunos archivos contienen columnas que son imágenes serializadas como texto y contienen caracteres no estándar. Esas columnas **no son necesarias** para el ejercicio de modelado y pueden removerse de los datasets. En esta solución, el script `scripts/preprocess_seeds.py` limpia y excluye columnas problemáticas (por ejemplo `Photo` en empleados) antes de cargar los seeds.
 
 ### Resultado esperado
@@ -236,6 +240,14 @@ El script `./scripts/dbt.sh` carga `dbt_snowflake_oauth_patch.py` (útil para OA
 
 ### Modelo de datos
 
+**Modelo dimensional de referencia (objetivo del curso):**
+
+![Modelo dimensional Northwind](dim_model.png)
+
+Diagrama de referencia con tres hechos (`fact_orders`, `fact_order_details`, `fact_inventory_snapshot`) y dimensiones conformadas. Esta implementación cubre el **MVP** centrado en `fact_orders` (ver tabla en [Qué incluye esta implementación](#qué-incluye-esta-implementación)); el diagrama sirve como mapa para extensiones.
+
+**Pipeline dbt implementado (capas en Snowflake):**
+
 ```mermaid
 flowchart LR
   raw[(datasets/northwind/*.csv)] --> pre["preprocess_seeds.py"]
@@ -249,7 +261,7 @@ flowchart LR
   DIM --> FACT
 ```
 
-Capas en Snowflake: `RAW` (seeds) → `STAGING` → `INT` → `SNAPSHOTS` (SCD2) → `MARTS` (`dim_*`, `fact_orders`).
+Capas: `RAW` (seeds) → `STAGING` → `INT` → `SNAPSHOTS` (SCD2) → `MARTS` (`dim_*`, `fact_orders`).
 
 ### Pruebas y checklist de reproducibilidad
 
