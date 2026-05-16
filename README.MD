@@ -1,6 +1,6 @@
 # Modelo dimensional Northwind
 
-Repositorio de referencia para el **Proyecto #4 — Construyendo un Data Warehouse**: modelo dimensional sobre Northwind con **dbt** y **Snowflake**.
+Repositorio de referencia para el **Proyecto #4 — Construyendo un Data Warehouse**: modelo dimensional sobre Northwind con **dbt** y **Snowflake** del **[Curso de Fundamentos de Ingeniería de Datos](https://latam-engineer.teachable.com/p/fundamentos-de-data-engineering).**
 
 ## Tabla de contenidos
 
